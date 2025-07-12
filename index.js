@@ -1,20 +1,28 @@
-const http= require("http");
+const http = require("http");
+const url = require("url");
 const fs = require("fs");
 
-const myserver = http.createServer((req,res)=>{
-    const log = `${Date.now()}:${req.url}new Request Recived\n`;
-    fs.appendFile('log.txt',log, (err, data)=>{
-        switch(req.url){
-            case '/': res.end("homepage");
-            break
-            case '/about': res.end("i am ravi");
-            break
-            default: res.end("404 error");
-            
-        }
-        res.end("hello  from server");
+const myserver = http.createServer((req, res) => {
+  if (req.url === "/favicon.ico") return res.end();
+  const log = `${Date.now()}:${req.url}new Request Recived\n`;
+  const myurl = url.parse(req.url, true);
+  console.log(myurl);
+  fs.appendFile("log.txt", log, (err, data) => {
+    switch (myurl.pathname) {
+      case "/":
+        res.end("homepage");
+        break;
+      case "/about":
+         username = myurl.query.username;
+         search = myurl.query.search;
+         userid = myurl.query.userid;
+        res.end(`i am ${username} i have a ${search} and my userid is ${userid} `);
 
-    });
-})
+        break;
+      default:
+        res.end("404 error");
+    }
+  });
+});
 
-myserver.listen(8000, ()=>console.log("server started at port 8000"));
+myserver.listen(8000, () => console.log("server started at port 8000"));

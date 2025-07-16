@@ -1,0 +1,17 @@
+rest api -json 
+
+
+get /user - list all users 
+
+get /api/user/1 get the all user with id
+get /api/user/2 get the all user with id 2
+
+post /api/users - create new users 
+
+dynamic path perameters 
+patch /api/users/1 - edit the user with id 1
+patch /api/users/2 - edit the user with id 2
+
+
+
+delete /api/users/1 -edit the user with id 1

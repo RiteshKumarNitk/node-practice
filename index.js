@@ -1,6 +1,3 @@
-const http = require("http");
-const url = require("url");
-const fs = require("fs");
 const express = require("express");
 
 const app = express();
@@ -10,9 +7,12 @@ app.get("/",(req, res)=>{
   return res.send("hello from Home page"+"my name is"+req.query.name)
 });
 app.get("/about",(req, res)=>{
-  return res.send("hello from About page")
+  return res.send("hello from About page"+"hey " + req.query.name)
 });
 
+app.listen(8000,()=>{
+  console.log("server started");
+} );
 // const myserver = http.createServer((req, res) => {
 //   if (req.url === "/favicon.ico") return res.end();
 //   const log = `${Date.now()}:${req.url}new Request Recived\n`;
@@ -35,7 +35,6 @@ app.get("/about",(req, res)=>{
 //     }
 //   });
 // });
+// const myserver = http.createServer(app);
 
-const myserver = http.createServer(app);
-
-myserver.listen(8000, () => console.log("server started at port 8000"));
+// myserver.listen(8000, () => console.log("server started at port 8000"));

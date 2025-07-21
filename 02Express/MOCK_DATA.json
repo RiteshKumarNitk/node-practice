@@ -3998,5 +3998,21 @@
     "email": "ccuddondv@nyu.edu",
     "gender": "Female",
     "job_title": "Quality Engineer"
+  },
+  {
+    "first_name": "ritesh",
+    "last_name": "kumar",
+    "email": "riteshkumar@gmail.com",
+    "gender": "male",
+    "job_title": "developer",
+    "id": 501
+  },
+  {
+    "first_name": "kushal",
+    "last_name": "verma",
+    "email": "kushalverma@gmail.com",
+    "gender": "male",
+    "job_title": "node developer",
+    "id": 502
   }
 ]

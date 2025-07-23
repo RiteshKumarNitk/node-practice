@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+	<title>Generate Token</title>
+	<style type="text/css">
+		.style1 {
+			width: 141px;
+		}
+	</style>
+	<link href="https://gisentstg.rajasthan.gov.in/dynamicquery/tokens/css/main.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="https://gisentstg.rajasthan.gov.in/dynamicquery/tokens/js/BigInt.js"></script>
+	<script type="text/javascript" src="https://gisentstg.rajasthan.gov.in/dynamicquery/tokens/js/Barrett.js"></script>
+	<script type="text/javascript" src="https://gisentstg.rajasthan.gov.in/dynamicquery/tokens/js/RSA.js"></script>
+	<script type="text/javascript" src="https://gisentstg.rajasthan.gov.in/dynamicquery/tokens/js/admin.js"></script>
+	<script type="text/javascript">
+		function onload() {
+        if (top.location != self.location) {
+           top.location = self.location;
+        }
+		var slbxClient = document.getElementById("slbxClientUi");
+		onClientSelect(slbxClient);
+	}
+
+	// Function to disable the client ids based on selection
+	function onClientSelect(slbxClient) {
+    	var selIdx = slbxClient.selectedIndex;
+    	var client = slbxClient.options[selIdx].value;
+    	var txbxHttpReferer = document.getElementById("txbxHttpRefererUi");
+    	var txbxIP = document.getElementById("txbxIPUi");
+    	if(client == "ip") {
+        	txbxHttpReferer.disabled = true;
+        	txbxIP.disabled = false;            	
+        	return;
+    	}
+    	if(client == "requestip") {
+        	txbxHttpReferer.disabled = true;
+        	txbxIP.disabled = true;            	
+        	return;
+    	}
+    	if(client == "referer") {
+    		txbxIP.disabled = true;
+    		txbxHttpReferer.disabled = false;            	
+        	return;
+    	}
+	}
+	
+	</script>
+</head>
+
+<body onload="document.f.username.focus();onload();">
+
+	<p><img alt="ArcGIS Token Service"
+        longdesc="ArcGIS Token Service" src="header.jpeg"
+        style="width:  269px; height: 42px"/></p>
+
+		<table class="titlecell" width="40%">
+			<tr>
+				<td class="breadcrumbs">Generate Token</td>
+				<td class="breadcrumbs" align="right">
+					<a href="https://gisentstg.rajasthan.gov.in/dynamicquery/help/en/server/11.3/administer/windows/acquiring-arcgis-tokens.htm"
+						target="_blank">Help</a>
+				</td>
+			</tr>
+		</table>
+
+
+		<div class="gwDiv">
+
+			<form name="f" action="generateToken"
+				onsubmit="return encryptFormData('10001','','d0ae9ba239ad2b81fc719fa1a5add14822adcf1ac83f2c24853697c81ede6209d58e15e7463b449800133aaac0ef0945d5a790109de7d0fa2a31b1dc9a40e1f029e89b84c1c6486fe6b5fde6afe92c87a116f78ea0bd44125d275a912cac59566a888d37db6dfdc59beffdadaadb35a31bb446d43e4d60f87acd7c5ec3dd7b3d83003c7ae706b074534af20002cd4fd71a64f2ba65a8b2d89d9bfae87f48a3eca9e7a935443c260bc982c3f363da4608dd10b4ee48eb984b01a829218584fc56f0ac81d80ffbe3b00d4c1b3850451a57ad5afbba3db87d606393186c1fdeb73e56a6057f77186e13dc982d7fda1a1465919b26f12c2583397dea9dd9ac712c5f');"
+				method="post">
+				<table class="formTable">
+					<tr>
+						<td><label for="usernameUi">Username</label></td>
+						<td><input type="text" id="usernameUi" value="deptadmin"/></td>
+					</tr>
+					<tr>
+						<td><label for="password">Password</label></td>
+						<td><input id="password" autocomplete="off" type="password" name="password"/></td>
+					</tr>
+					<tr>
+						<td><label for="slbxClientUi">Client</label></td>
+
+						<td>
+							<select id="slbxClientUi" onchange="onClientSelect(this);" style="width: 200px;">
+     						<option value="referer">HTTP Referer</option>
+     						<option value="ip">IP</option>
+     						<option value="requestip">Request IP</option>
+     					</select>
+						</td>
+					</tr>
+					<tr>
+						<td><label for="txbxHttpRefererUi">HTTP referer:</label></td>
+						<td><input id="txbxHttpRefererUi" type="text" style="width: 400px;"/></td>
+					</tr>
+					<tr>
+						<td><label for="txbxIPUi">IP:</label></td>
+						<td><input id="txbxIPUi" type="text" style="width: 200px;"/></td>
+					</tr>
+
+
+					<tr>
+						<td><label for="expirationUi">Expiration</label></td>
+						<td><select id="expirationUi">
+          <option value="60" selected='true'>1
+            hour
+          </option>
+          <option value="1440" >1
+            day
+          </option>
+          <option value="10080" >1
+            week
+          </option>
+          <option value="43200" >1
+            month
+          </option>
+          <option value="525600" >1
+            year
+          </option>
+        </select></td>
+					</tr>
+					<tr>
+						<td><label for="f">Format</label></td>
+						<td><select id="f" name="f">
+          <option value="html" selected="true">HTML</option>
+          <option value="json">JSON</option>
+        </select></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Generate Token"/></td>
+					</tr>
+				</table>
+
+				<input type="hidden" id="username" name="username"/>
+				<input type="hidden" id="slbxClient" name="client"/>
+				<input type="hidden" id="txbxHttpReferer" name="referer"/>
+				<input type="hidden" id="txbxIP" name="ip"/>
+				<input type="hidden" id="expiration" name="expiration"/>
+  </form>
+
+				<table class="formTable">
+					<tr>
+						<td>Generated Token:</td>
+						<td class="whiteTd"><b>dDBBWVgw5XmcukdGJpVJwVKJuoZdPJPwTiJoDSMvJQHvniSPBKMc66YgZgGGHLhy</b></td>
+					</tr>
+				</table>
+		</div>
+
+</body>
+
+</html>
